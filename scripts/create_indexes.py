@@ -76,8 +76,7 @@ def create_dictionary():
 						append_lemma(token, line_number)
 						
 						
-
-
+create_dictionary()
 # TODO: need to lemmatize hyphenated words properly: we save 'shape-shifting' ❓, 'shape' ✅ , and 'shift' ✅  but it might need to be 'shape-shift'
 with open("word_index.json", "w") as outfile:
 	json.dump(JSON_OUT, outfile)
