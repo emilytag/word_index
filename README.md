@@ -8,3 +8,6 @@ a simple API for fetching word index in Django
 - [x] started a hello world django app via the tutorial [here](https://docs.djangoproject.com/en/4.2/intro/tutorial01/)
   - [ ] todo: populate the django table based on the template created in the script
   - [ ] todo: write the model for the GET route that will fetch the info from the database
+### thoughts
+- the story text file is currently hardcoded, ideally that will be configurable
+- ideally the story text processing would work on app startup or maybe from a file upload? tbd
