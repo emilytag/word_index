@@ -1,10 +1,11 @@
 import json
+import sys
 import spacy
 from spacy.lang.char_classes import ALPHA, ALPHA_LOWER, ALPHA_UPPER
 from spacy.lang.char_classes import CONCAT_QUOTES, LIST_ELLIPSES, LIST_ICONS
 from spacy.util import compile_infix_regex
 
-STORY_PATH = "hector.txt"
+STORY_PATH = sys.argv[1]
 # container needed in the format to load into django
 JSON_OUT = []
 # keep track of words and primary keys
@@ -81,5 +82,5 @@ def create_dictionary():
 						
 create_dictionary()
 # TODO: need to lemmatize hyphenated words properly: we save 'shape-shifting' ❓, 'shape' ✅ , and 'shift' ✅  but it might need to be 'shape-shift'
-with open("word_index.json", "w") as outfile:
+with open("index/fixtures/word_index.json", "w") as outfile:
 	json.dump(JSON_OUT, outfile)
