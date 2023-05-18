@@ -2,7 +2,7 @@
 a simple API for fetching counts and line numbers for a given word in a text
 
 # about this app
-word_index is a simple web app developed in django. given a text file, the `create_indexes` script will create a JSON of index information for each token in the text. This JSON can be found in `index/fixtures`
+word_index is a simple web app developed in django. given a text file, `scripts/create_indexes.py` script will create a JSON of index information for each token in the text. This JSON can be found in `index/fixtures`
 ```
 cd word_index
 python3 scripts/create_indexes.py <text file>
