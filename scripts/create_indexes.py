@@ -82,5 +82,5 @@ def create_dictionary():
 						
 create_dictionary()
 # TODO: need to lemmatize hyphenated words properly: we save 'shape-shifting' ❓, 'shape' ✅ , and 'shift' ✅  but it might need to be 'shape-shift'
-with open("index/fixtures/word_index.json", "w") as outfile:
+with open("../fixtures/word_index.json", "w") as outfile:
 	json.dump(JSON_OUT, outfile)
