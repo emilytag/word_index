@@ -7,8 +7,8 @@ from spacy.util import compile_infix_regex
 STORY_PATH = "hector.txt"
 # container needed in the format to load into django
 JSON_OUT = []
-# keep track of words and primary keys, which should correspond to the index in json_out
-WORDS_SEEN = {}
+# keep track of words and primary keys
+WORDS_SEEN = []
 
 # load the tokenizer and lemmatizer
 # amend the tokenization rule that splits on hyphens
@@ -34,8 +34,19 @@ nlp.tokenizer.infix_finditer = infix_re.finditer
 # creates or updates the json blob to load into django
 def append_lemma(token, line_number):
 	lemma = token.lemma_
-	if lemma not in WORDS_SEEN:
-		new_pk = len(WORDS_SEEN.keys()) + 1
+
+	# if we've seen the word already update its information
+	existing_entry_blob = next((item for item in JSON_OUT if item["fields"]["word"] == lemma), None)
+	if existing_entry_blob:
+		existing_entry_blob["fields"]["index_data"]["count"] += 1
+		if line_number not in existing_entry_blob["fields"]["index_data"]["lines"]:
+			existing_entry_blob["fields"]["index_data"]["lines"].append(line_number)
+		pk_index = existing_entry_blob["pk"] - 1
+		JSON_OUT[pk_index] = existing_entry_blob
+
+	# otherwise create a new entry
+	else:
+		new_pk = len(WORDS_SEEN) + 1
 		new_entry_blob = {
 			"model": "selectstar.wordindex",
 			"pk": new_pk,
@@ -48,14 +59,7 @@ def append_lemma(token, line_number):
 			}
 		}
 		JSON_OUT.append(new_entry_blob)
-		WORDS_SEEN[lemma] = new_pk
-	else:
-		existing_entry_blob = next((item for item in JSON_OUT if item["fields"]["word"] == lemma), None)
-		existing_entry_blob["fields"]["index_data"]["count"] += 1
-		existing_entry_blob["fields"]["index_data"]["lines"].append(line_number)
-
-		pk_index = existing_entry_blob["pk"] - 1
-		JSON_OUT[pk_index] = existing_entry_blob
+		WORDS_SEEN.append(lemma)
 
 def create_dictionary():
 	with open(STORY_PATH) as story:
@@ -66,14 +70,13 @@ def create_dictionary():
 			for token in tokens:
 				# ignore non-words
 				if token.pos_ not in ['PUNCT', 'SPACE']:
+					append_lemma(token, line_number)
 					# if hyphenated we process the entire token and each part
 					if '-' in token.text:
-						append_lemma(token, line_number)
 						new_tokens = nlp(' '.join(token.text.split('-')))
 						for token in new_tokens:
 							append_lemma(token, line_number)
-					else:
-						append_lemma(token, line_number)
+
 						
 						
 create_dictionary()
