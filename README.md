@@ -31,7 +31,7 @@ curl "http://127.0.0.1:8000/index/village"
   - [ ] todo: populate the django table based on the template created in the script
   - [ ] todo: write the model for the GET route that will fetch the info from the database
 ### thoughts
-- the story text file is currently hardcoded, ideally that will be configurable
+- ~~the story text file is currently hardcoded, ideally that will be configurable~~
 - ideally the story text processing would work on app startup or maybe from a file upload? tbd
 
 # thursday may 18 (3 hours)
