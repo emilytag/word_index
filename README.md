@@ -1,5 +1,21 @@
 # word_index
-a simple API for fetching word index in Django
+a simple API for fetching counts and line numbers for a given word in a text
+
+# about this app
+word_index is a simple web app developed in django. given a text file, the `create_indexes` script will create a JSON of index information for each token in the text. This JSON can be found in `index/fixtures`
+```
+cd word_index
+python3 scripts/create_indexes.py <text file>
+```
+once the data is processed you can load it into the webapp by running
+```
+python3 manage.py loaddata word_index.json
+```
+from here you can start the web server and query the API for index information
+```
+python3 manage.py runserver
+curl "http://127.0.0.1:8000/index/village"
+```
 
 # wednesday may 17 (2 hours)
 - [x] wrote a first pass for the text processing piece, in `scripts/create_indexes.py`
@@ -11,3 +27,9 @@ a simple API for fetching word index in Django
 ### thoughts
 - the story text file is currently hardcoded, ideally that will be configurable
 - ideally the story text processing would work on app startup or maybe from a file upload? tbd
+
+# thursday may 18 (3 hours)
+- [x] had to finagle a few dependencies and settings but populated the JSON of word index data into the django datastore
+- [x] wrote the GET route to return the expected index info for queries
+- [x] wrote unit tests for lemmatization and a simple integration test for the GET route
+  - [ ] need to figure out 
