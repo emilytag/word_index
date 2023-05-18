@@ -38,4 +38,4 @@ curl "http://127.0.0.1:8000/index/village"
 - [x] had to finagle a few dependencies and settings but populated the JSON of word index data into the django datastore
 - [x] wrote the GET route to return the expected index info for queries
 - [x] wrote unit tests for lemmatization and a simple integration test for the GET route
-  - [ ] need to figure out 
+  - [ ] need to figure out testing with a populated db 
