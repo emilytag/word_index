@@ -1,5 +1,5 @@
 # word_index
-a simple API for fetching counts and line numbers for a given word in a text
+A simple API for fetching counts and line numbers for a given word in a text. I used this as a simple first project while learning Django.
 
 # about this app
 word_index is a simple web app developed in django. the app and scripts require [spacy](https://spacy.io/).
